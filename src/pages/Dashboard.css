@@ -1,0 +1,91 @@
+.orders-ship-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.order-ship-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+}
+
+.order-ship-item:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.order-ship-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.order-ship-num {
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.order-ship-customer {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.order-overdue {
+  font-size: 0.65rem;
+  color: var(--danger);
+  background: rgba(214,69,69,0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.order-ship-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.order-ship-amount {
+  font-weight: 700;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* Live chart badge */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(31, 157, 107, 0.12);
+  color: var(--success);
+}
+
+.live-time {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: live-pulse 1.6s ease-out infinite;
+}
+
+@keyframes live-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(31, 157, 107, 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(31, 157, 107, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(31, 157, 107, 0); }
+}

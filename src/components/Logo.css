@@ -1,0 +1,24 @@
+/* StockFlow logo */
+.sf-logo { display: inline-flex; align-items: center; gap: calc(var(--sf-size, 28px) * 0.36); line-height: 1; }
+.sf-logo-mark {
+  display: inline-flex;
+  perspective: 600px;
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 4px 14px rgba(99, 102, 241, 0.5));
+}
+.sf-logo-mark svg { display: block; overflow: visible; }
+.sf-logo-word {
+  font-family: var(--font-heading, 'Manrope', system-ui, sans-serif);
+  font-size: calc(var(--sf-size, 28px) * 0.72);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.sf-logo-word b { font-weight: 800; }
+.sf-logo-gradient .sf-logo-word {
+  background: linear-gradient(120deg, #c4b5fd, #67e8f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sf-logo-light .sf-logo-word { color: #fff; -webkit-text-fill-color: #fff; }
+@media print { .sf-logo-mark { filter: none; } }

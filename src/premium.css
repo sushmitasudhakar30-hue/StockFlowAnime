@@ -1,0 +1,261 @@
+/* ================================================================
+   STOCKFLOW — "AURORA INK" PREMIUM THEME
+   Loaded AFTER styles.css, so it only overrides how things look.
+   Dark theme is the hero; the light theme gets a lighter version.
+   Palette: deep ink background · indigo primary · cyan + mint accents.
+   ================================================================ */
+
+/* ---------- Design tokens ---------- */
+:root {
+  --aurora-1: #6366f1;   /* indigo  */
+  --aurora-2: #22d3ee;   /* cyan    */
+  --aurora-3: #a78bfa;   /* violet  */
+  --glass-line: rgba(15, 23, 42, 0.08);
+  --glass-bg: #ffffff;
+  --ring: 0 0 0 1px var(--glass-line);
+}
+
+[data-theme="dark"] {
+  --primary: #8b8dff;
+  --primary-hover: #a5a7ff;
+  --primary-light: rgba(129, 140, 248, 0.14);
+  --teal: #2dd4bf;
+  --amber: #fbbf24;
+  --success: #34d399;
+  --danger: #fb7185;
+
+  --bg: #070b16;
+  --card-bg: #0e1424;
+  --sidebar-bg: #090e1c;
+  --border: rgba(148, 163, 255, 0.13);
+  --input-bg: rgba(255, 255, 255, 0.04);
+  --input-border: rgba(148, 163, 255, 0.18);
+  --text: #eef1fb;
+  --muted: #8d98b4;
+
+  --shadow-sm: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 24px -14px rgba(0, 0, 0, 0.7);
+  --shadow-md: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 18px 40px -18px rgba(0, 0, 0, 0.8);
+  --shadow-lg: 0 30px 70px -20px rgba(0, 0, 0, 0.85);
+  --glass-line: rgba(148, 163, 255, 0.14);
+  --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015)) , #0e1424;
+}
+
+/* ---------- Ambient aurora background ---------- */
+body { background: var(--bg); }
+[data-theme="dark"] .app-main { position: relative; isolation: isolate; }
+[data-theme="dark"] .app-main::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 520px at 78% -8%, rgba(99, 102, 241, 0.20), transparent 62%),
+    radial-gradient(760px 480px at 6% 108%, rgba(34, 211, 238, 0.11), transparent 60%),
+    radial-gradient(520px 360px at 100% 90%, rgba(167, 139, 250, 0.09), transparent 65%);
+  animation: auroraDrift 22s ease-in-out infinite alternate;
+}
+@keyframes auroraDrift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-2%, 1.5%, 0) scale(1.06); }
+}
+[data-theme="dark"] .app-content { background: transparent; }
+
+/* ---------- Page wrapper (Framer Motion handles the entrance) ---------- */
+.page-fade { animation: none !important; }
+.page-motion { width: 100%; }
+
+/* ---------- Cards: glass panels with a lit top edge ---------- */
+[data-theme="dark"] .card,
+[data-theme="dark"] .data-table-container,
+[data-theme="dark"] .kpi-card,
+[data-theme="dark"] .warehouse-card,
+[data-theme="dark"] .card.wh-section,
+[data-theme="dark"] .card.wh-form-card,
+[data-theme="dark"] .card.supplier-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-line);
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+}
+[data-theme="dark"] .card:hover,
+[data-theme="dark"] .kpi-card:hover {
+  border-color: rgba(129, 140, 248, 0.32);
+  box-shadow: var(--shadow-md);
+}
+.card-title { letter-spacing: -0.01em; }
+
+/* ---------- Sidebar ---------- */
+.app-sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--glass-line);
+}
+[data-theme="dark"] .app-sidebar {
+  background:
+    linear-gradient(180deg, rgba(99, 102, 241, 0.10), transparent 32%),
+    var(--sidebar-bg);
+}
+.sidebar-logo { padding: 22px 22px 18px; }
+.sidebar-logo-text {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, var(--aurora-3), var(--aurora-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sidebar-logo svg { filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.55)); }
+.sidebar-item { position: relative; animation: none !important; background: transparent; }
+.sidebar-item > svg, .sidebar-item > span:not(.sidebar-accent):not(.sidebar-pill) { position: relative; z-index: 1; }
+.sidebar-item:hover { background: rgba(129, 140, 248, 0.08); }
+.sidebar-item.active { background: transparent; color: #f1f4ff; }   /* sidebar is dark in BOTH themes */
+.sidebar-item:hover { color: #f1f4ff; }
+.sidebar-logo { color: #f1f4ff; }
+.sidebar-item.active > svg { color: var(--aurora-2); }
+.sidebar-accent { display: none; }
+.sidebar-pill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(100deg, rgba(99, 102, 241, 0.26), rgba(34, 211, 238, 0.10));
+  box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.32), 0 8px 24px -10px rgba(99, 102, 241, 0.6);
+}
+.sidebar-nav-item { display: block; }
+
+/* ---------- Top bar: frosted glass ---------- */
+.app-topbar {
+  background: color-mix(in srgb, var(--card-bg) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--glass-line);
+}
+.avatar-circle {
+  background: linear-gradient(135deg, var(--aurora-1), var(--aurora-3));
+  color: #fff;
+  box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.25), 0 6px 16px -6px rgba(99, 102, 241, 0.8);
+}
+.avatar-dropdown { animation: none !important; transform-origin: top right; background: var(--card-bg); border: 1px solid var(--glass-line); }
+.topbar-avatar { position: relative; }
+
+/* ---------- KPI cards ---------- */
+.kpi-card { overflow: hidden; position: relative; animation: none !important; will-change: transform; }
+.kpi-card::after {                       /* soft light sweep on hover */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.07) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.9s ease;
+  pointer-events: none;
+}
+.kpi-card:hover::after { transform: translateX(120%); }
+.kpi-icon { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06) inset; }
+[data-theme="dark"] .kpi-primary .kpi-icon { background: linear-gradient(135deg, rgba(99, 102, 241, 0.35), rgba(167, 139, 250, 0.18)); color: #c7c9ff; }
+[data-theme="dark"] .kpi-teal    .kpi-icon { background: linear-gradient(135deg, rgba(34, 211, 238, 0.28), rgba(45, 212, 191, 0.12)); color: #67e8f9; }
+[data-theme="dark"] .kpi-amber   .kpi-icon { background: linear-gradient(135deg, rgba(251, 191, 36, 0.28), rgba(251, 191, 36, 0.08)); color: #fcd34d; }
+[data-theme="dark"] .kpi-success .kpi-icon { background: linear-gradient(135deg, rgba(52, 211, 153, 0.28), rgba(52, 211, 153, 0.08)); color: #6ee7b7; }
+[data-theme="dark"] .kpi-danger  .kpi-icon { background: linear-gradient(135deg, rgba(251, 113, 133, 0.28), rgba(251, 113, 133, 0.08)); color: #fda4af; }
+.kpi-value { font-size: 1.65rem; letter-spacing: -0.02em; }
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  box-shadow: 0 8px 22px -10px rgba(99, 102, 241, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+.btn-primary:hover { background: linear-gradient(135deg, #7578ff, #9a6dff); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+[data-theme="dark"] .btn-ghost { background: rgba(255, 255, 255, 0.03); }
+
+/* ---------- Forms ---------- */
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] textarea.form-input { background: rgba(255, 255, 255, 0.04); }
+.form-input:focus, .form-select:focus {
+  border-color: var(--aurora-1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22);
+}
+
+/* ---------- Tables ---------- */
+[data-theme="dark"] .data-table th { background: rgba(255, 255, 255, 0.035); }
+[data-theme="dark"] .data-table tbody tr:hover { background: rgba(129, 140, 248, 0.08); }
+
+/* ---------- Dashboard bits ---------- */
+.page-header h1 { font-family: var(--font-heading); letter-spacing: -0.03em; font-size: 1.75rem; }
+.hero-name {
+  background: linear-gradient(120deg, var(--aurora-3), var(--aurora-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.order-ship-item { position: relative; overflow: hidden; }
+[data-theme="dark"] .order-ship-item { background: rgba(255, 255, 255, 0.025); }
+.live-badge { background: rgba(52, 211, 153, 0.12); color: var(--success); }
+.live-dot { background: var(--success); }
+
+/* ---------- Modal + toast (Framer Motion drives the motion) ---------- */
+.modal-overlay { animation: none !important; backdrop-filter: blur(6px); background: rgba(3, 6, 15, 0.62); }
+.modal { animation: none !important; }
+[data-theme="dark"] .modal { background: var(--card-bg); border: 1px solid var(--glass-line); box-shadow: var(--shadow-lg); }
+.toast { animation: none !important; }
+
+/* ---------- Login page ---------- */
+.login-left {
+  background:
+    radial-gradient(700px 480px at 20% 15%, rgba(99, 102, 241, 0.55), transparent 62%),
+    radial-gradient(600px 420px at 85% 85%, rgba(34, 211, 238, 0.35), transparent 60%),
+    linear-gradient(145deg, #0b1020, #121a3a 55%, #0b1020);
+  animation: none;
+}
+.shape { animation: none !important; background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.02)); border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(2px); }
+.login-tagline { font-family: var(--font-heading); letter-spacing: -0.03em; }
+.login-tagline em {
+  font-style: normal;
+  background: linear-gradient(120deg, #c4b5fd, #67e8f9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme="dark"] .login-right { background: transparent; }
+.login-form-wrap { position: relative; }
+.login-form-title { font-family: var(--font-heading); letter-spacing: -0.02em; }
+.login-error { overflow: hidden; }
+
+/* ---------- Nice scrollbars ---------- */
+::-webkit-scrollbar-thumb { background: rgba(129, 140, 248, 0.25); }
+::-webkit-scrollbar-thumb:hover { background: rgba(129, 140, 248, 0.45); }
+::selection { background: rgba(99, 102, 241, 0.35); }
+
+/* ---------- Respect reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="dark"] .app-main::before { animation: none; }
+  .kpi-card::after { display: none; }
+}
+
+/* ---------- 3D hero (login) ---------- */
+.login-3d { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.login-3d canvas { display: block; width: 100% !important; height: 100% !important; }
+.login-3d-fallback { display: flex; align-items: center; justify-content: center; opacity: 0.9; }
+.login-left-content { position: relative; z-index: 1; }
+
+/* ---------- KPI tilt glare ---------- */
+.kpi-card { transform-style: preserve-3d; }
+.kpi-glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.25s; }
+.kpi-card:hover .kpi-glare { opacity: 1; }
+
+/* ---------- Skeleton shimmer + toast progress ---------- */
+.skeleton, .skeleton-line {
+  background: linear-gradient(100deg, rgba(255,255,255,0.04) 30%, rgba(255,255,255,0.11) 50%, rgba(255,255,255,0.04) 70%);
+  background-size: 200% 100%;
+  animation: sf-shimmer 1.4s linear infinite;
+}
+@keyframes sf-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+.toast { position: relative; overflow: hidden; }
+.toast::after {
+  content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: 100%;
+  background: currentColor; opacity: 0.35; transform-origin: left; animation: sf-toast-bar 4s linear forwards;
+}
+@keyframes sf-toast-bar { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .skeleton, .skeleton-line, .toast::after { animation: none; }
+}
